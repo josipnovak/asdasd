@@ -1,0 +1,9 @@
+asgiref==3.7.2
+Django==4.2
+sqlparse==0.4.4
+pyrebase4
+setuptools
+pyfcm
+firebase_admin
+supabase
+qrcode[pil]
