@@ -1,0 +1,44 @@
+{% extends "quiz/base_players.html" %}
+{% block content %}
+<form action="{% url 'quiz:join_quiz' quiz_id %}" method="post" id="joinQuizForm">
+    {% csrf_token %}
+    <label for="player_name">Enter your name:</label>
+    <input type="text" id="player_name" name="player_name" required>
+    <input type="hidden" id="device_token" name="device_token">
+    <button type="submit">Enter quiz</button>
+</form>
+
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
+
+<script>
+  // Initialize Firebase
+  var firebaseConfig = {
+    apiKey: "AIzaSyBcSUZ0zXsAEOY9t4PL82NqBKdGJFZgsX0",
+    authDomain: "zavrsni-proba-1.firebaseapp.com",
+    databaseURL: "https://zavrsni-proba-1-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "zavrsni-proba-1",
+    storageBucket: "zavrsni-proba-1.appspot.com",
+    messagingSenderId: "649829209184",
+    appId: "1:649829209184:web:343823581c648622d65f05"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const messaging = firebase.messaging();
+
+  messaging.requestPermission()
+    .then(function() {
+      console.log('Notification permission granted.');
+      return messaging.getToken();
+    })
+    .then(function(token) {
+      console.log('FCM Token:', token);
+      // You can now send this token to your server and store it
+      // For example, you could send it as part of a form submission
+      document.getElementById('device_token').value = token;
+    })
+    .catch(function(err) {
+      console.log('Unable to get permission to notify.', err);
+    });
+</script>
+{% endblock %}

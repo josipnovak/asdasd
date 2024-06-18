@@ -1,0 +1,23 @@
+{% extends "quiz/base.html" %}
+{% block content %}
+<div id="quiz_list">
+    <h1>User quizzes</h1>
+    <ul>
+        {% for quiz in quizzes %}
+        <a href="{% url 'quiz:quiz_details' quiz.id %}">
+            <div class="quiz_link">
+                Quiz name
+                {{ quiz.name }}
+                <br>
+                Quiz description
+                {{ quiz.description }}
+                {% comment %} <br>
+                {{ quiz.questions|length }} questions {% endcomment %}
+                <br>
+            </div>
+            </a>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'quiz:create_quiz' %}" class="new_quiz_link">Create new quiz</a>
+</div>
+{% endblock %}
